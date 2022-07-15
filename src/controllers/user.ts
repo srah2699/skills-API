@@ -18,14 +18,12 @@ const signIn: RequestHandler = async (req, res, next) => {
 
 	const user: any = await User.findOne({ emailId }).select('+password');
 
-	//user? next(): res.status(400).send('User not found');
 	if (!user) {
-		res.status(400).send('User not found');
+		return res.status(400).send('User not found');
 	}
 	const isPasswordCorrect = await user.isValidatePassword(password);
-	//isPasswordCorrect? next(): res.status(400).send('Password is Incorrect');
 
-	if (!isPasswordCorrect) res.status(400).send('Password is Incorrect');
+	if (!isPasswordCorrect) return res.status(400).send('Password is Incorrect');
 	const jwtToken = jwt.sign({ emailId: req.body.emailId }, 'skills-API', {
 		expiresIn: '1h',
 	});

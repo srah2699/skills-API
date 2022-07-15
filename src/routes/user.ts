@@ -6,20 +6,19 @@ import { app } from '../app';
 
 const user = express.Router();
 
-user.post('/register', 
-  [ 
-    middlewares.validators.validateReqBody, 
-    middlewares.checkUser
-  ],
-  controllers.user.createUser
-)
+user.post(
+	'/register',
+	[middlewares.validators.validateUserReqBody, middlewares.checkUser],
+	controllers.user.createUser
+);
 
-user.post('/login', controllers.user.signIn)
+user.post('/login', controllers.user.signIn);
 
-user.get('/logout', controllers.user.logout)
+user.get('/logout', controllers.user.logout);
 
-user.get('/getusers', async(req, res) => {
-  res.send(await User.find())
-})
+// make this endpoint available for admin only
+user.get('/getusers', async (req, res) => {
+	res.send(await User.find());
+});
 
 export default user;

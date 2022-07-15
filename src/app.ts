@@ -1,7 +1,6 @@
 import express, { Application} from 'express';
 const dotenv = require('dotenv').config();
 import router from './routes/index';
-import mongoose from 'mongoose';
 import dbConnection from './configs/db';
 
 export const app: Application = express();

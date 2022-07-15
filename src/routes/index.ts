@@ -1,7 +1,7 @@
 import user from './user';
 
 const router = {
-  user,
-}
+	user,
+};
 
 export default router;
