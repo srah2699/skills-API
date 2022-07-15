@@ -1,8 +1,9 @@
-import { checkUser } from './auth';
+import { checkUser, verifyUser } from './auth';
 import validators from './validators';
 
 const middlewares = {
   checkUser,
+  verifyUser,
   validators
 }
 

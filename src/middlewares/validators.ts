@@ -1,7 +1,7 @@
 import {RequestHandler} from 'express';
 import _ from 'lodash';
 
-const validateReqBody: RequestHandler= (req, res, next) => {
+const validateUserReqBody: RequestHandler= (req, res, next) => {
   const keys = [
     'firstName',
     'lastName',
@@ -30,11 +30,34 @@ const validateReqBody: RequestHandler= (req, res, next) => {
 		return res.status(400).send(`name, emailId and password must be strings`);
 	}
 
-  return next();
+  next();
+}
+
+const validateSkillReqBody: RequestHandler= (req, res, next) => {
+  const keys = [
+    'name',
+    'isExpert',
+    'proficiency',
+    'experience',
+    'level',
+  ];
+  const unknownKeys = _.difference(_.keys(req.body), keys);
+
+  if(unknownKeys.length){
+    return res.status(400).send(`unexpected properties: ${unknownKeys}`);
+  }
+
+  const missingKeys = _.difference(keys, _.keys(req.body));
+  if(missingKeys.length){
+    return res.status(400).send(`Missing required properties: ${missingKeys}`);
+  }
+  
+  next();
 }
 
 const validators = {
-  validateReqBody
+  validateUserReqBody,
+  validateSkillReqBody,
 }
 
 export default validators
