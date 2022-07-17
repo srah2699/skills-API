@@ -4,9 +4,9 @@ import controllers from '../controllers/index';
 
 const skillRouter = express.Router();
 
-skillRouter.post('/addskills', [middlewares.verifyUser, middlewares.validators.validateSkillReqBody], controllers.skills.addSkill)
-skillRouter.get('/skills')
-skillRouter.put('/updateskills')
-skillRouter.delete('/skill')
+skillRouter.post('/skills', [middlewares.verifyUser, middlewares.validators.validateSkillReqBody], controllers.skills.addSkill)
+skillRouter.get('/skills', middlewares.verifyUser, controllers.skills.getSkill)
+skillRouter.put('/skills', middlewares.verifyUser, controllers.skills.updateSkill)
+skillRouter.delete('/skills', middlewares.verifyUser, controllers.skills.deleteSkill)
 
 export default skillRouter;
