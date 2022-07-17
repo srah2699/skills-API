@@ -8,3 +8,5 @@ skillRouter.post('/addskills', [middlewares.verifyUser, middlewares.validators.v
 skillRouter.get('/skills')
 skillRouter.put('/updateskills')
 skillRouter.delete('/skill')
+
+export default skillRouter;

@@ -7,7 +7,7 @@ const createUser: RequestHandler = async (req, res) => {
 
 	try {
 		await userDetails.save();
-		res.status(200).send('registered succesfully');
+		res.status(200).send('registered successfully');
 	} catch (err: any) {
 		res.status(500).send({ message: err.message });
 	}

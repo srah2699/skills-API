@@ -14,7 +14,6 @@ const checkUser: RequestHandler= async (req, res, next) => {
 const verifyUser: RequestHandler= async (req: any, res, next) => {
   let token = req.cookies.jwtToken;
 
-  console.log(req.header("Authorization"));
   if (!token && req.header("Authorization")) {
     const bearerToken: string | any = req.header("Authorization");
     token = bearerToken.replace("Bearer ", "");
@@ -27,7 +26,7 @@ const verifyUser: RequestHandler= async (req: any, res, next) => {
   try {
     const secretKey: any = process.env.SECRET_KEY;
     const decodedToken: any = jwt.verify(token, secretKey);
-    req.user=await User.findOne({emailId: decodedToken.emailId })
+    req.user=await User.findOne({emailId: decodedToken.emailId });
     next();
   } catch (err: any){
     res.status(500).send({ message: err.message})
