@@ -29,11 +29,20 @@ export const login=createAsyncThunk("auth/login", async(user,thunkAPI)=>{
     }
 })
 
+export const logout=createAsyncThunk("auth/logout", async(thunkAPI)=>{
+    try {
+        return await authService.logout()
+    } catch (error) {
+        const message=(error.response&&error.response.data&&error.response.data.message)||error.message||error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
 export const authSlice=createSlice({
     name: 'auth',
     initialState,
     reducers:{
-        reset:(state)=>{
+        authReset:(state)=>{
             state.isLoading=false
             state.isError=false
             state.isSuccess=false
@@ -71,9 +80,12 @@ export const authSlice=createSlice({
                 state.message=action.payload
                 state.user=null
             })
+            .addCase(logout.fulfilled, (state)=>{
+                state.user=null
+            })
     }
 })
 
-export const {reset}= authSlice.actions
+export const {authReset}= authSlice.actions
 
 export default authSlice.reducer
